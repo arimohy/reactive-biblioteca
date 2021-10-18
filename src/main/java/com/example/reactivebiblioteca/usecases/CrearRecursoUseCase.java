@@ -22,6 +22,6 @@ public class CrearRecursoUseCase implements GuardarRecurso {
 
     @Override
     public Mono<String> apply(RecursoDTO recursoDTO) {
-        return repositorio.save(mapperUtils.mapperToDato(null).apply(recursoDTO)).map(Recurso::getId);
+        return repositorio.save(mapperUtils.mapperToRecurso(null).apply(recursoDTO)).map(Recurso::getId);
     }
 }
