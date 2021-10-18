@@ -81,5 +81,26 @@ public class RecursoRouter {
                                         .apply(request.pathVariable("id")), String.class))
         );
     }
-
+    @Bean
+    public RouterFunction<ServerResponse> Devolver(DevolverRecursoUseCase devolverRecursoUseCase) {
+        return route(
+                GET("/recursos/devolver/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters
+                                .fromPublisher(devolverRecursoUseCase
+                                        .apply(request.pathVariable("id")), String.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> RecomendarTipoRecurso(RecomendarTipoRecursoUseCase recomendarTipoRecursoUseCase) {
+        return route(
+                GET("/recursos/recomendar/tiporecurso/{tiporecurso}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters
+                                .fromPublisher(recomendarTipoRecursoUseCase
+                                        .apply(request.pathVariable("tiporecurso")), RecursoDTO.class))
+        );
+    }
 }
