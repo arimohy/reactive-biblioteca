@@ -11,11 +11,11 @@ import java.util.function.Function;
 
 @Service
 @Validated
-public class RecomendarTipoRecursoTematica implements BiFunction<String ,String, Flux<RecursoDTO>> {
+public class RecomendarTipoRecursoTematicaUseCase implements BiFunction<String ,String, Flux<RecursoDTO>> {
     private final Repositorio repositorio;
     private final MapperUtils mapperUtils;
 
-    public RecomendarTipoRecursoTematica(MapperUtils mapperUtils, Repositorio repositorio) {
+    public RecomendarTipoRecursoTematicaUseCase(MapperUtils mapperUtils, Repositorio repositorio) {
         this.repositorio = repositorio;
         this.mapperUtils = mapperUtils;
     }
