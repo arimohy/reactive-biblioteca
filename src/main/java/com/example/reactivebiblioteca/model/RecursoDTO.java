@@ -5,15 +5,11 @@ import java.time.LocalDate;
 
 public class RecursoDTO {
     private String id;
-    @NotBlank
     private String titulo;
-    @NotBlank
     private String tipoRecurso;
-    @NotBlank
     private String tematica;
     private String disponible;
     private LocalDate fechaprestamo;
-    @NotBlank
     private Long nroEjemplares;
     private Long nroEjemplaresPrestados;
 
