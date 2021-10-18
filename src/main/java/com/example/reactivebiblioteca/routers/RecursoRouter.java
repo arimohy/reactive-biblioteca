@@ -96,11 +96,33 @@ public class RecursoRouter {
     public RouterFunction<ServerResponse> RecomendarTipoRecurso(RecomendarTipoRecursoUseCase recomendarTipoRecursoUseCase) {
         return route(
                 GET("/recursos/recomendar/tiporecurso/{tiporecurso}").and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse.accepted()
+                request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters
                                 .fromPublisher(recomendarTipoRecursoUseCase
                                         .apply(request.pathVariable("tiporecurso")), RecursoDTO.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> RecomendarTematica(RecomendarTematicaUseCase recomendarTematicaUseCase) {
+        return route(
+                GET("/recursos/recomendar/tematica/{tematica}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters
+                                .fromPublisher(recomendarTematicaUseCase
+                                        .apply(request.pathVariable("tematica")), RecursoDTO.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> RecomendarTipoRecursoTematica(RecomendarTipoRecursoTematicaUseCase recomendarTipoRecursoTematicaUseCase) {
+        return route(
+                GET("/recursos/recomendar/{tiporecurso}/{tematica}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters
+                                .fromPublisher(recomendarTipoRecursoTematicaUseCase
+                                        .apply(request.pathVariable("tiporecurso"),request.pathVariable("tematica")), RecursoDTO.class))
         );
     }
 }
