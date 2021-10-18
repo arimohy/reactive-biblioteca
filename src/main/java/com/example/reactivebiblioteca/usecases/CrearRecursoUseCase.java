@@ -1,26 +1,27 @@
 package com.example.reactivebiblioteca.usecases;
 
+import com.example.reactivebiblioteca.collections.Recurso;
 import com.example.reactivebiblioteca.model.RecursoDTO;
 import com.example.reactivebiblioteca.repositories.Repositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import reactor.core.publisher.Flux;
-
-import java.util.function.Supplier;
+import reactor.core.publisher.Mono;
 
 @Service
 @Validated
-public class ListaRecursoUseCase implements Supplier<Flux<RecursoDTO>> {
+public class CrearRecursoUseCase implements GuardarRecurso {
     private final Repositorio repositorio;
     private final MapperUtils mapperUtils;
 
-    public ListaRecursoUseCase(MapperUtils mapperUtils, Repositorio repositorio) {
+    @Autowired
+    public CrearRecursoUseCase(MapperUtils mapperUtils, Repositorio repositorio) {
         this.repositorio = repositorio;
         this.mapperUtils = mapperUtils;
     }
 
     @Override
-    public Flux<RecursoDTO> get() {
-        return repositorio.findAll().map(mapperUtils.mapRecursoToDTO());
+    public Mono<String> apply(RecursoDTO recursoDTO) {
+        return repositorio.save(mapperUtils.mapperToDato(null).apply(recursoDTO)).map(Recurso::getId);
     }
 }

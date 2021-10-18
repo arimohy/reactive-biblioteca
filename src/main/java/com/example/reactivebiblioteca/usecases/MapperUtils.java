@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 @Component
 public class MapperUtils {
-    public Function<RecursoDTO, Recurso> mapperToDato(String id) {
+    public Function<RecursoDTO, Recurso> mapperToRecurso(String id) {
         return updateRecurso -> {
             var recurso = new Recurso();
             recurso.setId(id);
@@ -22,7 +22,7 @@ public class MapperUtils {
             return recurso;
         };
     }
-    public Function<Recurso, RecursoDTO> mapDatoToDTO() {
+    public Function<Recurso, RecursoDTO> mapRecursoToDTO() {
         return entity -> new RecursoDTO(
                 entity.getId(),
                 entity.getTitulo(),
