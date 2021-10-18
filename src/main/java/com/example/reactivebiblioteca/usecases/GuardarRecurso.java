@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 
 @FunctionalInterface
-public interface SaveRecurso {
+public interface GuardarRecurso {
     Mono<String> apply(@Valid RecursoDTO recursoDTO);
 }
