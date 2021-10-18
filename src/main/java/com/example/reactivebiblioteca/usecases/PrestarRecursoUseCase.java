@@ -32,7 +32,7 @@ public class PrestarRecursoUseCase implements Function<String, Mono<String>> {
                         return actualizarRecursoUseCase.apply(mapperUtils.mapRecursoToDTO().apply(recurso))
                                 .thenReturn("{mensaje: recurso prestado satisfactoriamente}");
                     }
-                    return Mono.just("{mensaje: No se realizo el prestamo por que todos los ejemplares fueron prestados}");
+                    return Mono.just("{mensaje: No hay Ejemplares suficientes para realizar el prestamo}");
                 }
         );
     }
