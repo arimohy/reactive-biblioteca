@@ -16,7 +16,7 @@ public class PrestarRecursoUseCase implements Function<String, Mono<String>> {
     private final ActualizarRecursoUseCase actualizarRecursoUseCase;
     private final MapperUtils mapperUtils;
 
-    public PrestarRecursoUseCase(ActualizarRecursoUseCase actualizarRecursoUseCase, MapperUtils mapperUtils,Repositorio resourceRepository) {
+    public PrestarRecursoUseCase(MapperUtils mapperUtils,Repositorio resourceRepository) {
         this.repositorio = resourceRepository;
         this.actualizarRecursoUseCase = new ActualizarRecursoUseCase(mapperUtils, repositorio);
         this.mapperUtils = mapperUtils;
