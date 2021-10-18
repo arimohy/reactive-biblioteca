@@ -10,11 +10,11 @@ import java.util.function.Function;
 
 @Service
 @Validated
-public class RecomendarTematica implements Function<String , Flux<RecursoDTO>> {
+public class RecomendarTematicaUseCase implements Function<String , Flux<RecursoDTO>> {
     private final Repositorio repositorio;
     private final MapperUtils mapperUtils;
 
-    public RecomendarTematica(MapperUtils mapperUtils, Repositorio repositorio) {
+    public RecomendarTematicaUseCase(MapperUtils mapperUtils, Repositorio repositorio) {
         this.repositorio = repositorio;
         this.mapperUtils = mapperUtils;
     }
