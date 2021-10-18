@@ -1,9 +1,7 @@
 package com.example.reactivebiblioteca.routers;
 
 import com.example.reactivebiblioteca.model.RecursoDTO;
-import com.example.reactivebiblioteca.usecases.ActualizarRecursoUseCase;
-import com.example.reactivebiblioteca.usecases.CrearRecursoUseCase;
-import com.example.reactivebiblioteca.usecases.ListaRecursoUseCase;
+import com.example.reactivebiblioteca.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -32,7 +30,7 @@ public class RecursoRouter {
     @Bean
     public RouterFunction<ServerResponse> getAll(ListaRecursoUseCase listaRecursoUseCase) {
         return route(
-                GET("/recursos/consultar").and(accept(MediaType.APPLICATION_JSON)),
+                GET("/recursos/modificar").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(listaRecursoUseCase.get(), RecursoDTO.class))
@@ -50,4 +48,38 @@ public class RecursoRouter {
                         )
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> delete(EliminarRecursoUseCase eliminarRecursoUseCase) {
+        return route(
+                DELETE("/recursos/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(eliminarRecursoUseCase.apply(request.pathVariable("id")), Void.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> Disponiblibilidad(ConsultarDisponibilidadUseCase consultarDisponibilidadUseCase) {
+        return route(
+                GET("/recursos/disponible/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters
+                                .fromPublisher(consultarDisponibilidadUseCase
+                                        .apply(request.pathVariable("id")), String.class))
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> Prestar(PrestarRecursoUseCase prestarRecursoUseCase) {
+        return route(
+                GET("/recursos/prestar/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters
+                                .fromPublisher(prestarRecursoUseCase
+                                        .apply(request.pathVariable("id")), String.class))
+        );
+    }
+
 }
