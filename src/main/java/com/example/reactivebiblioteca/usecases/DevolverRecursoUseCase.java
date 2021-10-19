@@ -1,11 +1,15 @@
 package com.example.reactivebiblioteca.usecases;
 
 import com.example.reactivebiblioteca.repositories.Repositorio;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
 import java.util.function.Function;
 
+@Service
+@Validated
 public class DevolverRecursoUseCase implements Function<String, Mono<String>> {
     private final Repositorio repositorio;
     private final ActualizarRecursoUseCase actualizarRecursoUseCase;

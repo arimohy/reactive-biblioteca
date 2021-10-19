@@ -24,7 +24,7 @@ public class RecomendarTipoRecursoTematicaUseCase implements BiFunction<String ,
     public Flux<RecursoDTO> apply(String tiporecurso,String tematica) {
         return repositorio.findAll()
                 .filter(recurso -> recurso.getTipoRecurso().equals(tiporecurso))
-                .filter(recurso -> recurso.getTipoRecurso().equals(tematica))
+                .filter(recurso -> recurso.getTematica().equals(tematica))
                 .map(mapperUtils.mapRecursoToDTO());
     }
 }

@@ -21,8 +21,8 @@ public class RecomendarTematicaUseCase implements Function<String , Flux<Recurso
 
     @Override
     public Flux<RecursoDTO> apply(String tematica) {
-        return repositorio.findAll().filter(recurso -> recurso
-                        .getTipoRecurso().equals(tematica))
+        return repositorio.findAll()
+                .filter(recurso -> recurso.getTematica().equals(tematica))
                 .map(mapperUtils.mapRecursoToDTO());
     }
 }

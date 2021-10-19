@@ -30,7 +30,7 @@ public class RecursoRouter {
     @Bean
     public RouterFunction<ServerResponse> getAll(ListaRecursoUseCase listaRecursoUseCase) {
         return route(
-                GET("/recursos/modificar").and(accept(MediaType.APPLICATION_JSON)),
+                GET("/recursos/mostrar").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(listaRecursoUseCase.get(), RecursoDTO.class))
@@ -39,7 +39,7 @@ public class RecursoRouter {
     @Bean
     public RouterFunction<ServerResponse> update(ActualizarRecursoUseCase actualizarRecursoUseCase) {
         return route(
-                PUT("/recursos/actualizar").and(accept(MediaType.APPLICATION_JSON)),
+                PUT("/recursos/modificar").and(accept(MediaType.APPLICATION_JSON)),
                 request -> request.bodyToMono(RecursoDTO.class)
                         .flatMap(questionDTO -> actualizarRecursoUseCase.apply(questionDTO)
                                 .flatMap(result -> ServerResponse.ok()
@@ -101,6 +101,7 @@ public class RecursoRouter {
                         .body(BodyInserters
                                 .fromPublisher(recomendarTipoRecursoUseCase
                                         .apply(request.pathVariable("tiporecurso")), RecursoDTO.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
     @Bean
@@ -112,17 +113,20 @@ public class RecursoRouter {
                         .body(BodyInserters
                                 .fromPublisher(recomendarTematicaUseCase
                                         .apply(request.pathVariable("tematica")), RecursoDTO.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
     @Bean
     public RouterFunction<ServerResponse> RecomendarTipoRecursoTematica(RecomendarTipoRecursoTematicaUseCase recomendarTipoRecursoTematicaUseCase) {
+
         return route(
-                GET("/recursos/recomendar/{tiporecurso}/{tematica}").and(accept(MediaType.APPLICATION_JSON)),
+                GET("/recursos/recomendar/tipoytematica/{tiporecurso}/{tematica}").and(accept(MediaType.APPLICATION_JSON)),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters
                                 .fromPublisher(recomendarTipoRecursoTematicaUseCase
                                         .apply(request.pathVariable("tiporecurso"),request.pathVariable("tematica")), RecursoDTO.class))
+                        .onErrorResume((Error) -> ServerResponse.badRequest().build())
         );
     }
 }
